@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "name": "A – Projekt + DRF setup",
+      "setup": "pip install -r requirements.txt",
+      "run": "python -m pytest test_vizsga.py::TestProjektSetup -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 20,
+      "points": 6
+    },
+    {
+      "name": "B – Modellek + migráció",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestModellek -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 12
+    },
+    {
+      "name": "C – Admin",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestAdmin -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 6
+    },
+    {
+      "name": "D – Serializers + nested",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestSerializers -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 10
+    },
+    {
+      "name": "E – ViewSet + Router CRUD",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestViewSetCrud -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 16
+    },
+    {
+      "name": "F – Queryset optimalizálás",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestQuerysetOpt -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 20,
+      "points": 4
+    },
+    {
+      "name": "G – JWT auth",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestJwt -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 10
+    },
+    {
+      "name": "H – Permissions",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestPermissions -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 12
+    },
+    {
+      "name": "I – Pagination + filter",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestPaginationFilter -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 10
+    },
+    {
+      "name": "J – Seed command",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestSeed -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "K – Diák API tesztek",
+      "setup": "pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput",
+      "run": "python -m pytest test_vizsga.py::TestDiakTesztek -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 45,
+      "points": 6
+    },
+    {
+      "name": "L – README + docs",
+      "setup": "pip install -r requirements.txt",
+      "run": "python -m pytest test_vizsga.py::TestDocs -v --tb=short",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 15,
+      "points": 4
+    }
+  ]
+}

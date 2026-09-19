@@ -1,0 +1,159 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: A – Projekt + DRF setup
+      id: vizsga-a
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: A – Projekt + DRF setup
+        setup-command: pip install -r requirements.txt
+        command: python -m pytest test_vizsga.py::TestProjektSetup -v --tb=short
+        timeout: 20
+        max-score: 6
+
+    - name: B – Modellek + migráció
+      id: vizsga-b
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: B – Modellek + migráció
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestModellek -v --tb=short
+        timeout: 30
+        max-score: 12
+
+    - name: C – Admin
+      id: vizsga-c
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: C – Admin
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestAdmin -v --tb=short
+        timeout: 30
+        max-score: 6
+
+    - name: D – Serializers + nested
+      id: vizsga-d
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: D – Serializers + nested
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestSerializers -v --tb=short
+        timeout: 30
+        max-score: 10
+
+    - name: E – ViewSet + Router CRUD
+      id: vizsga-e
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: E – ViewSet + Router CRUD
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestViewSetCrud -v --tb=short
+        timeout: 30
+        max-score: 16
+
+    - name: F – Queryset optimalizálás
+      id: vizsga-f
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: F – Queryset optimalizálás
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestQuerysetOpt -v --tb=short
+        timeout: 20
+        max-score: 4
+
+    - name: G – JWT auth
+      id: vizsga-g
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: G – JWT auth
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestJwt -v --tb=short
+        timeout: 30
+        max-score: 10
+
+    - name: H – Permissions
+      id: vizsga-h
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: H – Permissions
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestPermissions -v --tb=short
+        timeout: 30
+        max-score: 12
+
+    - name: I – Pagination + filter
+      id: vizsga-i
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: I – Pagination + filter
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestPaginationFilter -v --tb=short
+        timeout: 30
+        max-score: 10
+
+    - name: J – Seed command
+      id: vizsga-j
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: J – Seed command
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestSeed -v --tb=short
+        timeout: 30
+        max-score: 4
+
+    - name: K – Diák API tesztek
+      id: vizsga-k
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: K – Diák API tesztek
+        setup-command: pip install -r requirements.txt && python manage.py makemigrations courses --noinput && python manage.py migrate --noinput
+        command: python -m pytest test_vizsga.py::TestDiakTesztek -v --tb=short
+        timeout: 45
+        max-score: 6
+
+    - name: L – README + docs
+      id: vizsga-l
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: L – README + docs
+        setup-command: pip install -r requirements.txt
+        command: python -m pytest test_vizsga.py::TestDocs -v --tb=short
+        timeout: 15
+        max-score: 4
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        VIZSGA-A_RESULTS: "${{steps.vizsga-a.outputs.result}}"
+        VIZSGA-B_RESULTS: "${{steps.vizsga-b.outputs.result}}"
+        VIZSGA-C_RESULTS: "${{steps.vizsga-c.outputs.result}}"
+        VIZSGA-D_RESULTS: "${{steps.vizsga-d.outputs.result}}"
+        VIZSGA-E_RESULTS: "${{steps.vizsga-e.outputs.result}}"
+        VIZSGA-F_RESULTS: "${{steps.vizsga-f.outputs.result}}"
+        VIZSGA-G_RESULTS: "${{steps.vizsga-g.outputs.result}}"
+        VIZSGA-H_RESULTS: "${{steps.vizsga-h.outputs.result}}"
+        VIZSGA-I_RESULTS: "${{steps.vizsga-i.outputs.result}}"
+        VIZSGA-J_RESULTS: "${{steps.vizsga-j.outputs.result}}"
+        VIZSGA-K_RESULTS: "${{steps.vizsga-k.outputs.result}}"
+        VIZSGA-L_RESULTS: "${{steps.vizsga-l.outputs.result}}"
+      with:
+        runners: vizsga-a,vizsga-b,vizsga-c,vizsga-d,vizsga-e,vizsga-f,vizsga-g,vizsga-h,vizsga-i,vizsga-j,vizsga-k,vizsga-l
